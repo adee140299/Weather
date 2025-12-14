@@ -1,4 +1,4 @@
-const apiKey = "YOUR_API_KEY";
+const apiKey = "0bd3fc6eef1cc50b75322d03a54e20d0";
 
 function showLoader(show) {
     document.getElementById("loader").style.display = show ? "block" : "none";
