@@ -14,6 +14,10 @@ function showWeather(data) {
     const iconCode = data.weather[0].icon;
     document.getElementById("icon").src =
         `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+    
+    const lat = data.coord.lat;
+    const lon = data.coord.lon;
+    getAQI(lat, lon);
 
     getForecast(data.name);
 }
@@ -82,3 +86,23 @@ function getForecast(city) {
             }
         });
 }
+function getAQI(lat, lon) {
+    fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`)
+        .then(res => res.json())
+        .then(data => {
+            const aqiValue = data.list[0].main.aqi;
+            let aqiText = "";
+
+            switch (aqiValue) {
+                case 1: aqiText = "Good 😊"; break;
+                case 2: aqiText = "Fair 🙂"; break;
+                case 3: aqiText = "Moderate 😐"; break;
+                case 4: aqiText = "Poor 😷"; break;
+                case 5: aqiText = "Very Poor ☠️"; break;
+            }
+
+            document.getElementById("aqi").innerText =
+                `Air Quality Index: ${aqiText}`;
+        });
+}
+
